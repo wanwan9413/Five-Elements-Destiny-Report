@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Five Elements Destiny Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Alegreya:wght@400;600;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: #f5f0e0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f0e0"/><path d="M0,0 Q50,30 100,0 T100,100 Q50,70 0,100 Z" fill="%23e8dfd1" opacity="0.2"/></svg>');
+            color: #3e2e1f;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f9f7f3;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(94, 70, 44, 0.3);
+            border: 1px solid #c0a080;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #5d4037, #8d6e63);
+            color: #f5f0e0;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid #4e342e;
+        }
+        
+        .header::before {
+            content: "☯";
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            font-size: 250px;
+            opacity: 0.08;
+            transform: rotate(15deg);
+            color: #f5f0e0;
+        }
+        
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        
+        .main-title span {
+            font-family: 'Noto Serif SC', serif;
+            display: block;
+            font-size: 2.4rem;
+            margin-top: 10px;
+            letter-spacing: 8px;
+        }
+        
+        .sub-title {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            font-style: italic;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .sub-title span {
+            font-family: 'Noto Serif SC', serif;
+            display: block;
+            margin-top: 8px;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+        }
+        
+        .input-section {
+            padding: 40px;
+            background: #e8dfd1;
+            text-align: center;
+            border-bottom: 3px solid #bcaaa4;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: bold;
+            color: #5d4037;
+            font-size: 1.3rem;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #a1887f;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            background: #f9f7f3;
+            text-align: center;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .btn {
+            background: #5d4037;
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.3rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(94, 70, 44, 0.3);
+            font-family: 'Cinzel', serif;
+        }
+        
+        .btn:hover {
+            background: #8d6e63;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(94, 70, 44, 0.4);
+        }
+        
+        .report-section {
+            display: none;
+            padding: 0 30px 40px;
+        }
+        
+        .report-header {
+            text-align: center;
+            padding: 30px 0;
+            background: #d7ccc8;
+            margin: 0 -30px 40px;
+            color: #5d4037;
+            font-weight: bold;
+            font-size: 1.3rem;
+            border-bottom: 3px solid #bcaaa4;
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* Redesigned profile section - Zodiac and Element side by side */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+        
+        .profile-card {
+            background: #e8dfd1;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 6px 20px rgba(94, 70, 44, 0.15);
+            border: 2px solid #c0a080;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .zodiac-icon {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: #f5f0e0;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(94, 70, 44, 0.25);
+            border: 4px solid #6d4c41;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        
+        .profile-info h2 {
+            color: #4e342e;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .profile-info p {
+            color: #5d4037;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .zodiac-desc {
+            background: rgba(249, 245, 235, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-style: italic;
+            border-left: 3px solid #8d6e63;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            text-align: left;
+        }
+        
+        .zodiac-desc p {
+            margin-bottom: 12px;
+        }
+        
+        /* Element card styles */
+        .element-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .wood { background: linear-gradient(to bottom, #5d8c46, #7ca860); }
+        .fire { background: linear-gradient(to bottom, #b34a35, #d15c45); }
+        .earth { background: linear-gradient(to bottom, #8d6e63, #a88a7d); }
+        .metal { background: linear-gradient(to bottom, #78909c, #8fa4b0); }
+        .water { background: linear-gradient(to bottom, #4a7ba6, #5d8fbb); }
+        
+        .element-desc {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #5d4037;
+            font-family: 'Alegreya', serif;
+            text-align: left;
+        }
+        
+        .element-desc strong {
+            color: #5d4037;
+            font-weight: 700;
+        }
+        
+        /* Today's Fortune section */
+        .today-fortune-section {
+            background: #e8dfd1;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 6px solid #8d6e63;
+            text-align: center;
+        }
+        
+        .fortune-level {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin: 20px 0;
+            font-family: 'Cinzel', serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .fortune-level.great { color: #c62828; }
+        .fortune-level.excellent { color: #e65100; }
+        .fortune-level.good { color: #f9a825; }
+        .fortune-level.fair { color: #2e7d32; }
+        .fortune-level.neutral { color: #1565c0; }
+        
+        .fortune-actions {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .fortune-do, .fortune-dont {
+            flex: 1;
+            max-width: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(94, 70, 44, 0.15);
+        }
+        
+        .fortune-do {
+            background: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
+            border-top: 5px solid #4caf50;
+        }
+        
+        .fortune-dont {
+            background: linear-gradient(to bottom, #ffebee, #ffcdd2);
+            border-top: 5px solid #f44336;
+        }
+        
+        .fortune-label {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .fortune-content {
+            font-size: 1.3rem;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+        
+        /* Lucky info section */
+        .lucky-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #d7ccc8;
+            border-radius: 15px;
+            border: 2px solid #bcaaa4;
+        }
+        
+        .lucky-card {
+            text-align: center;
+            padding: 25px;
+            background: #e8dfd1;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(94, 70, 44, 0.1);
+        }
+        
+        .lucky-card i {
+            font-size: 3rem;
+            color: #5d4037;
+            margin-bottom: 20px;
+        }
+        
+        .lucky-card h3 {
+            font-size: 1.5rem;
+            color: #5d4037;
+            margin-bottom: 15px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .lucky-card p {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4e342e;
+            font-family: 'Alegreya', serif;
+        }
+        
+        /* Detailed Fortune section */
+        .fortune-section {
+            background: #e8dfd1;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 6px solid #8d6e63;
+        }
+        
+        .fortune-title {
+            font-size: 1.8rem;
+            margin-bottom: 35px;
+            color: #5d4037;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .fortune-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .fortune-card {
+            background: #f9f7f3;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(94, 70, 44, 0.15);
+            border-top: 5px solid;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .fortune-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(94, 70, 44, 0.2);
+        }
+        
+        .career { border-color: #5d4037; }
+        .wealth { border-color: #8d6e63; }
+        .relationship { border-color: #a1887f; }
+        .health { border-color: #6d4c41; }
+        .study { border-color: #78909c; }
+        .social { border-color: #4a7ba6; }
+        
+        .fortune-label {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #5d4037;
+            margin-bottom: 18px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .stars {
+            color: #d4ac0d;
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            margin: 18px 0;
+        }
+        
+        .fortune-content {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .music-recommendation {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 8px;
+            border-left: 3px solid #8d6e63;
+            font-size: 1.1rem;
+        }
+        
+        .music-recommendation h4 {
+            color: #5d4037;
+            margin-bottom: 8px;
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* Auspicious Recommendations section */
+        .auspicious-section {
+            background: #e8dfd1;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 2px solid #8d6e63;
+        }
+        
+        .auspicious-title {
+            font-size: 1.8rem;
+            margin-bottom: 35px;
+            color: #5d4037;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+        }
+        
+        .auspicious-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .auspicious-card {
+            background: #f9f7f3;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(94, 70, 44, 0.1);
+            text-align: center;
+        }
+        
+        .auspicious-card-title {
+            font-size: 1.3rem;
+            color: #5d4037;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .auspicious-content {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .awareness-section {
+            background: #f9f7f3;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(94, 70, 44, 0.1);
+            border-top: 4px solid #6d4c41;
+        }
+        
+        .awareness-title {
+            font-size: 1.4rem;
+            color: #5d4037;
+            margin-bottom: 20px;
+            font-family: 'Cinzel', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .awareness-content {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            font-family: 'Alegreya', serif;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #6d4c41;
+            font-size: 1.15rem;
+            background: #d7ccc8;
+            border-top: 3px solid #bcaaa4;
+            font-style: italic;
+            line-height: 1.9;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            margin-bottom: 15px;
+        }
+        
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #5d4037;
+        }
+        
+        .decorative-corner {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            border-width: 3px;
+            border-style: solid;
+            border-color: #8d6e63;
+            opacity: 0.3;
+        }
+        
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+        
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+        
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+        
+        @media (max-width: 992px) {
+            .main-title {
+                font-size: 2.6rem;
+            }
+            
+            .main-title span {
+                font-size: 2.0rem;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .zodiac-icon {
+                width: 130px;
+                height: 130px;
+                font-size: 60px;
+            }
+            
+            .element-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+            
+            .fortune-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .main-title span {
+                font-size: 1.7rem;
+            }
+            
+            .sub-title {
+                font-size: 1.2rem;
+            }
+            
+            .sub-title span {
+                font-size: 1.1rem;
+            }
+            
+            .input-section {
+                padding: 30px;
+            }
+            
+            .form-group input {
+                padding: 14px;
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 14px 35px;
+                font-size: 1.2rem;
+            }
+            
+            .fortune-level {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-title span {
+                font-size: 1.4rem;
+            }
+            
+            .sub-title {
+                font-size: 1.0rem;
+            }
+            
+            .sub-title span {
+                font-size: 0.9rem;
+            }
+            
+            .input-section {
+                padding: 20px;
+            }
+            
+            .lucky-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .fortune-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .auspicious-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decorative-corner corner-tl"></div>
+        <div class="decorative-corner corner-tr"></div>
+        <div class="decorative-corner corner-bl"></div>
+        <div class="decorative-corner corner-br"></div>
+        
+        <div class="header">
+            <h1 class="main-title">Five Elements Destiny Report
+                <span>Your Personalized Eastern Element Analysis</span>
+            </h1>
+            <p class="sub-title">Integrating Millennia of Wisdom into Modern Life
+                <span>Revealing Your Destiny Path and Daily Fortunes</span>
+            </p>
+        </div>
+        
+        <div class="input-section">
+            <div class="form-group">
+                <label for="user-name"><i class="fas fa-user"></i> Your Full Name</label>
+                <input type="text" id="user-name" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="user-birthday"><i class="fas fa-calendar-alt"></i> Birth Date (Gregorian Calendar)</label>
+                <input type="date" id="user-birthday">
+            </div>
+            
+            <button class="btn" id="generate-btn">
+                <i class="fas fa-magic"></i> Generate Your Destiny Report
+            </button>
+        </div>
+        
+        <div class="report-section" id="report-section">
+            <div class="report-header">
+                Report Date: <span id="report-date"></span>
+            </div>
+            
+            <!-- Zodiac and Element side by side layout -->
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div class="zodiac-icon" id="zodiac-icon">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="user-fullname"></h2>
+                        <p id="user-animal"></p>
+                        <div class="zodiac-desc">
+                            <p id="zodiac-description"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="element-icon" id="main-element-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h2>Elemental Analysis</h2>
+                        <!-- Removed redundant "Primary Element" display -->
+                        <div class="element-desc">
+                            <p id="element-analysis"></p>
+                            <p id="element-description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Moved Today's Fortune section to appear right after profile section -->
+            <div class="today-fortune-section">
+                <h3 class="fortune-title">Today's Overall Fortune</h3>
+                <div class="fortune-level" id="fortune-level">Good Fortune</div>
+                <p class="element-desc" id="today-fortune"></p>
+                
+                <div class="fortune-actions">
+                    <div class="fortune-do">
+                        <div class="fortune-label"><i class="fas fa-check-circle"></i> Recommended Actions</div>
+                        <div class="fortune-content" id="fortune-do"></div>
+                    </div>
+                    <div class="fortune-dont">
+                        <div class="fortune-label"><i class="fas fa-times-circle"></i> Actions to Avoid</div>
+                        <div class="fortune-content" id="fortune-dont"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lucky info section -->
+            <div class="lucky-section">
+                <div class="lucky-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Auspicious Time</h3>
+                    <p id="auspicious-time"></p>
+                </div>
+                <div class="lucky-card">
+                    <i class="fas fa-hashtag"></i>
+                    <h3>Lucky Numbers</h3>
+                    <p id="lucky-numbers"></p>
+                </div>
+                <div class="lucky-card">
+                    <i class="fas fa-compass"></i>
+                    <h3>Fortunate Direction</h3>
+                    <p id="fortunate-direction"></p>
+                </div>
+            </div>
+            
+            <!-- Detailed Fortune section -->
+            <div class="fortune-section">
+                <h3 class="fortune-title">Detailed Fortune Analysis</h3>
+                <div class="fortune-grid">
+                    <div class="fortune-card career">
+                        <div class="fortune-label"><i class="fas fa-briefcase"></i> Career Fortune</div>
+                        <div class="stars" id="career-stars">★★★★☆</div>
+                        <div class="fortune-content" id="career-fortune"></div>
+                    </div>
+                    
+                    <div class="fortune-card wealth">
+                        <div class="fortune-label"><i class="fas fa-coins"></i> Wealth Fortune</div>
+                        <div class="stars" id="wealth-stars">★★★☆☆</div>
+                        <div class="fortune-content" id="wealth-fortune"></div>
+                    </div>
+                    
+                    <div class="fortune-card relationship">
+                        <div class="fortune-label"><i class="fas fa-heart"></i> Relationship Fortune</div>
+                        <div class="stars" id="relationship-stars">★★★★★</div>
+                        <div class="fortune-content" id="relationship-fortune"></div>
+                    </div>
+                    
+                    <div class="fortune-card health">
+                        <div class="fortune-label"><i class="fas fa-heartbeat"></i> Health Fortune</div>
+                        <div class="stars" id="health-stars">★★★☆☆</div>
+                        <div class="fortune-content" id="health-fortune"></div>
+                        <div class="music-recommendation" id="health-music"></div>
+                    </div>
+                    
+                    <div class="fortune-card study">
+                        <div class="fortune-label"><i class="fas fa-graduation-cap"></i> Study Fortune</div>
+                        <div class="stars" id="study-stars">★★★★☆</div>
+                        <div class="fortune-content" id="study-fortune"></div>
+                    </div>
+                    
+                    <div class="fortune-card social">
+                        <div class="fortune-label"><i class="fas fa-users"></i> Social Fortune</div>
+                        <div class="stars" id="social-stars">★★★★☆</div>
+                        <div class="fortune-content" id="social-fortune"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Auspicious Recommendations section -->
+            <div class="auspicious-section">
+                <h3 class="auspicious-title">Auspicious Recommendations</h3>
+                <div class="auspicious-grid">
+                    <div class="auspicious-card">
+                        <div class="auspicious-card-title">
+                            <i class="fas fa-palette"></i> Lucky Colors
+                        </div>
+                        <div class="auspicious-content" id="auspicious-colors"></div>
+                    </div>
+                    
+                    <div class="auspicious-card">
+                        <div class="auspicious-card-title">
+                            <i class="fas fa-utensils"></i> Auspicious Foods
+                        </div>
+                        <div class="auspicious-content" id="auspicious-food"></div>
+                    </div>
+                    
+                    <div class="auspicious-card">
+                        <div class="auspicious-card-title">
+                            <i class="fas fa-hiking"></i> Recommended Activities
+                        </div>
+                        <div class="auspicious-content" id="auspicious-activities"></div>
+                    </div>
+                </div>
+                
+                <div class="awareness-section">
+                    <div class="awareness-title">
+                        <i class="fas fa-exclamation-triangle"></i> Important Awareness
+                    </div>
+                    <div class="awareness-content" id="awareness-content"></div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Passing down millennia of wisdom to help you understand your destiny path</p>
+                <p>This report is for entertainment purposes only</p>
+                <div class="brand-name">FengSheng Culture · 豐笙文化出品</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Zodiac icon mapping
+        const zodiacIcons = {
+            Rat: "fa-rat",
+            Ox: "fa-cow",
+            Tiger: "fa-paw",
+            Rabbit: "fa-rabbit",
+            Dragon: "fa-dragon",
+            Snake: "fa-snake",
+            Horse: "fa-horse",
+            Goat: "fa-sheep",
+            Monkey: "fa-monkey",
+            Rooster: "fa-crow",
+            Dog: "fa-dog",
+            Pig: "fa-pig"
+        };
+        
+        // Zodiac cultural descriptions
+        const zodiacDescriptions = {
+            Rat: {
+                desc: `The Rat, symbolizing wit and vitality, is regarded as an embodiment of wisdom in Chinese culture. Those born under this sign are observant, highly adaptable, and skilled at spotting opportunities in details.`,
+                element: "water"
+            },
+            Ox: {
+                desc: `The Ox, a central totem of China's agrarian culture, is foundational to civilization. As an emblem of diligence and tenacity, it symbolizes unwavering responsibility and serves as a model for dependable individuals.`,
+                element: "earth"
+            },
+            Tiger: {
+                desc: `The Tiger, revered as the king of beasts, embodies majesty and courage. Those born under this sign are typically bold, charismatic leaders who face challenges head-on with passion and sincerity.`,
+                element: "wood"
+            },
+            Rabbit: {
+                desc: `The Rabbit represents a gentle and agile auspicious creature—perceptive, empathetic, and averse to conflict. Its strategic survival instinct symbolizes adaptability and resilience.`,
+                element: "wood"
+            },
+            Dragon: {
+                desc: `The Dragon, the only mythical creature in the zodiac, symbolizes divine blessings. With its "soaring dragon" spirit, it defies convention, often pioneering trends or ventures.`,
+                element: "earth"
+            },
+            Snake: {
+                desc: `The Snake symbolizes wisdom and transformation, sharing the dragon's mystical status. Its hibernation and molting represent resilience and rebirth, embodying the philosophy of patience.`,
+                element: "fire"
+            },
+            Horse: {
+                desc: `The Horse symbolizes freedom, vigor, and perseverance. Ancient Chinese texts honor horses as noble creatures carrying heroes into battle. Those born under this sign are typically spirited and action-oriented.`,
+                element: "fire"
+            },
+            Goat: {
+                desc: `The Goat symbolizes gentleness and kindness. Those born under this sign are often compassionate, sincere, and peace-loving, prioritizing family and emotional bonds.`,
+                element: "earth"
+            },
+            Monkey: {
+                desc: `The Monkey is an emblem of cleverness and agility. Those born under this sign are usually lively, quick-witted, and humorous, with exceptional adaptability.`,
+                element: "metal"
+            },
+            Rooster: {
+                desc: `The Rooster symbolizes dawn and vigilance. Its crow at daybreak represents punctuality and duty. Those born under this sign are often disciplined, principled, and outspoken.`,
+                element: "metal"
+            },
+            Dog: {
+                desc: `The Dog symbolizes protection and righteousness. It is a heartwarming emblem of devotion in Chinese culture. Those born under this sign are typically sincere, valuing duty and relationships.`,
+                element: "earth"
+            },
+            Pig: {
+                desc: `The Pig symbolizes honesty and abundance, representing harvest and blessings. Those born under this sign are usually optimistic, easygoing, and generous, embracing life fully.`,
+                element: "water"
+            }
+        };
+        
+        // Five Elements database
+        const elements = {
+            wood: {
+                name: "Wood",
+                icon: "tree",
+                color: "linear-gradient(to bottom, #5d8c46, #7ca860)",
+                analysis: "Wood represents growth, renewal, and vision. Those born under this element possess strong leadership abilities and a creative spirit.",
+                description: "Your natural ability to plan for the future and your nurturing nature help you thrive even in challenging circumstances."
+            },
+            fire: {
+                name: "Fire",
+                icon: "fire",
+                color: "linear-gradient(to bottom, #b34a35, #d15c45)",
+                analysis: "Fire symbolizes passion, energy, and transformation. Fire element individuals are known for their enthusiasm and ability to inspire others.",
+                description: "Your natural charisma and dynamic personality allow you to lead and motivate others, bringing warmth and illumination to those around you."
+            },
+            earth: {
+                name: "Earth",
+                icon: "mountain",
+                color: "linear-gradient(to bottom, #8d6e63, #a88a7d)",
+                analysis: "Earth represents stability, practicality, and nourishment. Earth element individuals are known for their reliability and grounded nature.",
+                description: "Your steadfast and nurturing qualities make you a pillar of strength for those around you, providing the foundation for growth."
+            },
+            metal: {
+                name: "Metal",
+                icon: "gem",
+                color: "linear-gradient(to bottom, #78909c, #8fa4b0)",
+                analysis: "Metal symbolizes precision, strength, and discipline. Metal element individuals are known for their analytical skills and determination.",
+                description: "Your methodical approach and attention to detail serve you well in all endeavors, becoming stronger through refinement."
+            },
+            water: {
+                name: "Water",
+                icon: "tint",
+                color: "linear-gradient(to bottom, #4a7ba6, #5d8fbb)",
+                analysis: "Water represents wisdom, intuition, and adaptability. Water element individuals are known for their insight and ability to navigate challenges.",
+                description: "Your intuitive nature and adaptability allow you to flow around obstacles, possessing the power to carve new paths through persistence."
+            }
+        };
+        
+        // Chinese zodiac animals
+        const zodiacAnimals = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
+        
+        // Chinese hours
+        const chineseHours = ["11 PM - 1 AM", "1 AM - 3 AM", "3 AM - 5 AM", "5 AM - 7 AM", "7 AM - 9 AM", "9 AM - 11 AM", "11 AM - 1 PM", "1 PM - 3 PM", "3 PM - 5 PM", "5 PM - 7 PM", "7 PM - 9 PM", "9 PM - 11 PM"];
+        
+        // Directions
+        const directions = ["East", "South", "West", "North", "Southeast", "Northeast", "Southwest", "Northwest"];
+        
+        // Recommended activities
+        const fortuneDoActivities = [
+            "Sign contracts", "Financial investments", "Travel", "Learn new skills", "Express feelings",
+            "Move house", "Buy valuable items", "Business meetings", "Exercise", "Artistic creation",
+            "Visit mentors", "Team building", "Home renovation", "Start projects", "Make plans",
+            "Beauty treatments", "Attend training", "Expand network", "Health checkup", "Charity donations"
+        ];
+        
+        // Activities to avoid
+        const fortuneDontActivities = [
+            "Impulse buying", "Arguments", "Procrastination", "Overcommitting", "Working late",
+            "Dangerous sports", "Loaning money", "Signing contracts", "Major investments", "Long drives",
+            "Changing plans", "Job hopping", "Surgery", "Property deals", "Emotional outbursts",
+            "Overeating", "Gossiping", "Boasting", "Following trends blindly", "Overworking",
+            "Avoiding responsibility", "Escaping problems", "Trusting strangers", "Gambling", "Important meetings"
+        ];
+        
+        // Fortune levels
+        const fortuneLevels = ["Great Fortune", "Excellent Fortune", "Good Fortune", "Fair Fortune", "Neutral Fortune"];
+        
+        // Music recommendation places
+        const musicPlaces = ["Near a window", "Sunny spot", "Quiet corner", "Tidy space", "Dimly lit area"];
+        
+        // Music effect descriptions
+        const musicEffects = [
+            "Enhance focus", "Boost energy", "Stabilize mood", "Improve decision making", "Promote better sleep",
+            "Inspire creativity", "Reduce stress", "Increase confidence", "Deepen meditation", "Improve memory"
+        ];
+        
+        // Calculate elemental affinity
+        function calculateElement(zodiacAnimal) {
+            return zodiacDescriptions[zodiacAnimal]?.element || "wood";
+        }
+        
+        // Calculate zodiac animal
+        function calculateZodiac(birthYear) {
+            const startYear = 1900; // Rat year
+            const index = (birthYear - startYear) % 12;
+            return index >= 0 ? zodiacAnimals[index] : zodiacAnimals[12 + index];
+        }
+        
+        // Create unique seed
+        function createUniqueSeed(birthDate, currentDate) {
+            let hash = 17;
+            const str = `${birthDate.getFullYear()}${birthDate.getMonth()}${birthDate.getDate()}` +
+                        `${currentDate.getFullYear()}${currentDate.getMonth()}${currentDate.getDate()}`;
+            
+            for (let i = 0; i < str.length; i++) {
+                hash = (hash * 31 + str.charCodeAt(i)) % 1000000;
+            }
+            return hash;
+        }
+        
+        // Generate dynamic lucky info
+        function generateLuckyInfo(birthDate, currentDate) {
+            const uniqueSeed = createUniqueSeed(birthDate, currentDate);
+            
+            // Generate auspicious time
+            const hourIndex = uniqueSeed % chineseHours.length;
+            const auspiciousTime = chineseHours[hourIndex];
+            
+            // Generate lucky numbers (two numbers 1-99)
+            const num1 = (uniqueSeed % 99) + 1;
+            const num2 = ((uniqueSeed * 13) % 99) + 1;
+            const luckyNumbers = `${num1}, ${num2}`;
+            
+            // Generate direction (based on month and day)
+            const month = currentDate.getMonth() + 1;
+            const day = currentDate.getDate();
+            const dirIndex = (month * day) % directions.length;
+            const fortunateDirection = directions[dirIndex];
+            
+            return {
+                auspiciousTime,
+                luckyNumbers,
+                fortunateDirection
+            };
+        }
+        
+        // Generate fortune actions
+        function generateFortuneActions(birthDate, currentDate) {
+            const uniqueSeed = createUniqueSeed(birthDate, currentDate);
+            
+            const doIndex = uniqueSeed % fortuneDoActivities.length;
+            const dontIndex = (uniqueSeed * 7) % fortuneDontActivities.length;
+            
+            return {
+                fortuneDo: fortuneDoActivities[doIndex],
+                fortuneDont: fortuneDontActivities[dontIndex]
+            };
+        }
+        
+        // Generate fortune level
+        function generateFortuneLevel(birthDate, currentDate) {
+            const uniqueSeed = createUniqueSeed(birthDate, currentDate);
+            const levelIndex = uniqueSeed % fortuneLevels.length;
+            return fortuneLevels[levelIndex];
+        }
+        
+        // Generate music recommendation
+        function generateMusicRecommendation(elementKey, birthDate, currentDate) {
+            const uniqueSeed = createUniqueSeed(birthDate, currentDate);
+            
+            // Recommended time
+            const timeIndex = uniqueSeed % chineseHours.length;
+            const time = chineseHours[timeIndex];
+            
+            // Recommended place
+            const placeIndex = (uniqueSeed + elementKey.length) % musicPlaces.length;
+            const place = musicPlaces[placeIndex];
+            
+            // Effect description
+            const effectIndex = (uniqueSeed * 3) % musicEffects.length;
+            const effect = musicEffects[effectIndex];
+            
+            // Tips
+            const tips = [
+                "Listen consecutively for 3 days for best results",
+                "Combine with deep breathing for enhanced effect",
+                "Use noise-cancelling headphones for better experience",
+                "Close your eyes while listening for full effect",
+                "Combine with aromatherapy for better results"
+            ][uniqueSeed % 5];
+            
+            return `For optimal benefit, listen to ${elementKey} element music at ${time} in a ${place}. This will ${effect}. ${tips}`;
+        }
+        
+        // Generate daily fortune
+        function generateDailyFortune(birthDate, currentDate, zodiacAnimal, elementKey) {
+            const birthYear = birthDate.getFullYear();
+            const birthMonth = birthDate.getMonth() + 1;
+            const currentDay = currentDate.getDate();
+            const dayOfWeek = currentDate.getDay();
+            
+            // Unique seed
+            const uniqueSeed = createUniqueSeed(birthDate, currentDate);
+            
+            // Based on zodiac and element
+            const zodiacMod = birthYear % 12;
+            const elementMod = birthYear % 5;
+            const dateMod = (birthMonth * currentDay) % 6;
+            
+            // Generate fortune content
+            const todayOptions = [
+                `Today brings strong ${elementKey} element energy! The celestial alignment favors creative pursuits. An excellent day to start new projects that align with your natural talents.`,
+                `A harmonious day for ${zodiacAnimal}s. Your natural charisma will open doors and create new connections. Planetary alignment favors social interactions.`,
+                `Today's energy enhances your ${elementKey} qualities. Trust your intuition and embrace new challenges. A powerful day for personal growth.`,
+                `The cosmos favor ${zodiacAnimal} today. Your perseverance will lead to breakthroughs. Obstacles that seemed insurmountable may now yield to your efforts.`,
+                `A day of balance for ${elementKey} elements. Focus on relationships and inner peace. The energy supports healing and strengthening bonds.`
+            ];
+            
+            const careerOptions = [
+                `New opportunities emerge in your professional life. Your leadership skills will be recognized. An excellent time to showcase your talents.`,
+                `Clarity comes to career decisions today. Trust your instincts when evaluating possibilities. Your path forward may become clear.`,
+                `Team collaborations will be fruitful today. Your ability to mediate different perspectives will be invaluable. Share your vision.`,
+                `A career breakthrough is possible today. Stay focused on long-term goals while remaining open to opportunities.`,
+                `Your innovative ideas will gain traction today. Present them to decision-makers—the timing is right.`
+            ];
+            
+            const wealthOptions = [
+                `Financial stability continues, but unexpected expenses may arise. Focus on long-term investments. Review your budget.`,
+                `A favorable day for financial planning. The energy supports prudent adjustments to your portfolio.`,
+                `Unexpected financial opportunities may appear today. Evaluate them carefully before committing.`,
+                `Avoid impulsive purchases today. Focus on needs rather than wants for financial health.`,
+                `Your financial intuition is strong today. Trust your instincts but verify facts before acting.`
+            ];
+            
+            const relationshipOptions = [
+                `A harmonious period for relationships. Singles may meet someone special through social events.`,
+                `Deep conversations will strengthen existing relationships today. Share your thoughts with sensitivity.`,
+                `New relationships may blossom unexpectedly today. Be open to connections in unexpected places.`,
+                `Reconnect with loved ones today. Heartfelt conversation can heal misunderstandings and strengthen bonds.`,
+                `Your natural charm attracts positive relationships today. Social gatherings will be rewarding.`
+            ];
+            
+            const healthOptions = [
+                `Energy levels are good but watch for stress-related fatigue. Recharge through gentle movement or meditation.`,
+                `Focus on balance in your health routine today. Combine activity and rest for optimal wellbeing.`,
+                `Listen to your body's signals today. Gentle stretching can release built-up tension.`,
+                `A good day to start a new fitness routine. Small changes made today can lead to lasting benefits.`,
+                `Pay attention to your dietary choices today. Nourishing foods will boost energy and mental clarity.`
+            ];
+            
+            const studyOptions = [
+                `Excellent time for learning new skills. Your concentration is heightened, making complex subjects easier.`,
+                `Complex subjects will be easier to grasp today. Dedicate time to deep learning without distractions.`,
+                `Your natural curiosity makes this a great day for research and exploration of new ideas.`,
+                `Share your knowledge with others today. Teaching will reinforce your own understanding.`,
+                `Breakthroughs in understanding are possible today. Tackle challenging subjects with confidence.`
+            ];
+            
+            const socialOptions = [
+                `Your social circle expands today. Networking will bring valuable connections for future opportunities.`,
+                `Reconnect with old friends who can offer new perspectives. Shared history creates strong bonds.`,
+                `Group activities will be rewarding today. Your contribution will be appreciated and may lead to recognition.`,
+                `New social opportunities arise today. Be open to invitations, even outside your comfort zone.`,
+                `Your charisma is at its peak today. Build meaningful connections that align with your values.`
+            ];
+            
+            const colorsOptions = [
+                `Forest green, sky blue and lavender will enhance your energy today. These colors resonate with your ${elementKey} element.`,
+                `Fiery red, vibrant orange and golden yellow will attract success today. These warm tones stimulate your ${elementKey} qualities.`,
+                `Earthy browns, terracotta and warm yellows will enhance stability today. These natural tones connect to supportive energy.`,
+                `Metallic silver, steel blue and white will sharpen focus today. These crisp tones enhance mental clarity.`,
+                `Deep blues, aqua and teal will enhance intuition today. These watery tones promote emotional balance.`
+            ];
+            
+            const foodOptions = [
+                `Green vegetables, sprouts and herbal teas are beneficial today. Try adding more celery and spinach.`,
+                `Bitter greens, tomatoes and red peppers are beneficial today. Add chili and garlic in moderation.`,
+                `Root vegetables, grains and legumes are beneficial today. Try adding sweet potatoes and oats.`,
+                `Cruciferous vegetables, mushrooms and mineral-rich foods support health today. Prepare simply.`,
+                `Fish, seaweed and hydrating fruits enhance your natural flow today. Enjoy pleasing combinations.`
+            ];
+            
+            const activitiesOptions = {
+                wood: [
+                    "15 minutes of gardening",
+                    "Try calligraphy or painting",
+                    "Walk in a park observing plants"
+                ],
+                fire: [
+                    "Take a dance or fitness class",
+                    "Organize a small social gathering",
+                    "Try a new sport"
+                ],
+                earth: [
+                    "Try pottery or clay work",
+                    "Organize your living space",
+                    "Cook a balanced meal"
+                ],
+                metal: [
+                    "Organize your workspace",
+                    "Learn a new skill or language",
+                    "Practice meditation or breathing"
+                ],
+                water: [
+                    "Meditation or mindfulness",
+                    "Relaxing bath or foot soak",
+                    "Record dreams or intuitions"
+                ]
+            };
+            
+            const awarenessOptions = [
+                "Avoid rushed decisions this week. Take time to gather information and consult trusted advisors.",
+                "Be mindful of impulsive decisions. Your natural enthusiasm may lead to overcommitment.",
+                "Avoid becoming too rigid in routines. While structure is valuable, flexibility allows adaptation.",
+                "Watch for perfectionist tendencies today. High standards are good, but excessive self-criticism can be counterproductive.",
+                "Be aware of emotional tides today. Feelings provide guidance but don't always require immediate action."
+            ];
+            
+            // Select content based on unique hash
+            const todayIndex = (uniqueSeed + zodiacMod + dayOfWeek) % todayOptions.length;
+            const careerIndex = (uniqueSeed + zodiacMod + dateMod) % careerOptions.length;
+            const wealthIndex = (uniqueSeed + elementMod + birthMonth) % wealthOptions.length;
+            const relationshipIndex = (uniqueSeed + zodiacMod + elementMod + dateMod) % relationshipOptions.length;
+            const healthIndex = (uniqueSeed + birthYear % 10 + dateMod) % healthOptions.length;
+            const studyIndex = (uniqueSeed + dayOfWeek + zodiacMod) % studyOptions.length;
+            const socialIndex = (uniqueSeed + currentDay + elementMod) % socialOptions.length;
+            const colorsIndex = (uniqueSeed + zodiacMod + dayOfWeek) % colorsOptions.length;
+            const foodIndex = (uniqueSeed + elementMod + dayOfWeek) % foodOptions.length;
+            const activitiesIndex = (uniqueSeed + birthYear % 12 + dayOfWeek) % activitiesOptions[elementKey].length;
+            const awarenessIndex = (uniqueSeed + birthYear % 7 + dayOfWeek) % awarenessOptions.length;
+            
+            // Star rating calculation
+            const baseStars = 3;
+            const starVariation = (dateMod + zodiacMod + currentDay) % 3;
+            const stars = "★".repeat(baseStars + starVariation) + "☆".repeat(5 - (baseStars + starVariation));
+            
+            return {
+                todayFortune: todayOptions[todayIndex],
+                career: careerOptions[careerIndex],
+                wealth: wealthOptions[wealthIndex],
+                relationship: relationshipOptions[relationshipIndex],
+                health: healthOptions[healthIndex],
+                study: studyOptions[studyIndex],
+                social: socialOptions[socialIndex],
+                colors: colorsOptions[colorsIndex],
+                food: foodOptions[foodIndex],
+                activities: activitiesOptions[elementKey][activitiesIndex],
+                awareness: awarenessOptions[awarenessIndex],
+                stars: stars
+            };
+        }
+        
+        // Generate report
+        function generateReport() {
+            const userName = document.getElementById('user-name').value;
+            const birthday = document.getElementById('user-birthday').value;
+            
+            if (!userName || !birthday) {
+                alert("Please enter your name and birth date");
+                return;
+            }
+            
+            // Parse birth date
+            const birthDate = new Date(birthday);
+            const birthYear = birthDate.getFullYear();
+            
+            // Calculate zodiac
+            const zodiacAnimal = calculateZodiac(birthYear);
+            
+            // Calculate element
+            const elementKey = calculateElement(zodiacAnimal);
+            const element = elements[elementKey] || elements.wood;
+            
+            // Update UI
+            document.getElementById('user-fullname').textContent = userName;
+            document.getElementById('user-animal').textContent = `Chinese Zodiac: ${zodiacAnimal}`;
+            document.getElementById('zodiac-description').innerHTML = `
+                <p>${zodiacDescriptions[zodiacAnimal].desc}</p>
+            `;
+            
+            // Update zodiac icon
+            const zodiacIconElement = document.getElementById('zodiac-icon');
+            zodiacIconElement.innerHTML = `<i class="fas ${zodiacIcons[zodiacAnimal]}"></i>`;
+            zodiacIconElement.style.background = element.color;
+            
+            // Update element icon
+            const mainElementIcon = document.getElementById('main-element-icon');
+            mainElementIcon.className = `element-icon ${elementKey}`;
+            mainElementIcon.innerHTML = `<i class="fas fa-${element.icon}"></i>`;
+            
+            // Update element analysis (removed redundant "Primary Element" display)
+            document.getElementById('element-analysis').innerHTML = `<strong>Your primary element is ${element.name}.</strong> ${element.analysis}`;
+            document.getElementById('element-description').textContent = element.description;
+            
+            // Generate daily fortune
+            const currentDate = new Date();
+            const dailyFortune = generateDailyFortune(birthDate, currentDate, zodiacAnimal, elementKey);
+            
+            // Update today's fortune
+            document.getElementById('today-fortune').textContent = dailyFortune.todayFortune;
+            
+            // Update detailed fortunes
+            document.getElementById('career-fortune').textContent = dailyFortune.career;
+            document.getElementById('career-stars').textContent = dailyFortune.stars;
+            document.getElementById('wealth-fortune').textContent = dailyFortune.wealth;
+            document.getElementById('wealth-stars').textContent = dailyFortune.stars;
+            document.getElementById('relationship-fortune').textContent = dailyFortune.relationship;
+            document.getElementById('relationship-stars').textContent = dailyFortune.stars;
+            document.getElementById('health-fortune').textContent = dailyFortune.health;
+            document.getElementById('health-stars').textContent = dailyFortune.stars;
+            document.getElementById('study-fortune').textContent = dailyFortune.study;
+            document.getElementById('study-stars').textContent = dailyFortune.stars;
+            document.getElementById('social-fortune').textContent = dailyFortune.social;
+            document.getElementById('social-stars').textContent = dailyFortune.stars;
+            
+            // Update recommendations
+            document.getElementById('auspicious-colors').textContent = dailyFortune.colors;
+            document.getElementById('auspicious-food').textContent = dailyFortune.food;
+            document.getElementById('auspicious-activities').textContent = dailyFortune.activities;
+            document.getElementById('awareness-content').textContent = dailyFortune.awareness;
+            
+            // Generate and update lucky info
+            const luckyInfo = generateLuckyInfo(birthDate, currentDate);
+            document.getElementById('auspicious-time').textContent = luckyInfo.auspiciousTime;
+            document.getElementById('lucky-numbers').textContent = luckyInfo.luckyNumbers;
+            document.getElementById('fortunate-direction').textContent = luckyInfo.fortunateDirection;
+            
+            // Generate and update fortune actions
+            const fortuneActions = generateFortuneActions(birthDate, currentDate);
+            document.getElementById('fortune-do').textContent = fortuneActions.fortuneDo;
+            document.getElementById('fortune-dont').textContent = fortuneActions.fortuneDont;
+            
+            // Generate and update fortune level
+            const fortuneLevel = generateFortuneLevel(birthDate, currentDate);
+            const fortuneLevelElement = document.getElementById('fortune-level');
+            fortuneLevelElement.textContent = fortuneLevel;
+            
+            // Set level color
+            fortuneLevelElement.className = "fortune-level";
+            if (fortuneLevel === "Great Fortune") fortuneLevelElement.classList.add("great");
+            else if (fortuneLevel === "Excellent Fortune") fortuneLevelElement.classList.add("excellent");
+            else if (fortuneLevel === "Good Fortune") fortuneLevelElement.classList.add("good");
+            else if (fortuneLevel === "Fair Fortune") fortuneLevelElement.classList.add("fair");
+            else if (fortuneLevel === "Neutral Fortune") fortuneLevelElement.classList.add("neutral");
+            
+            // Generate and update music recommendation
+            const musicRecommendation = generateMusicRecommendation(elementKey, birthDate, currentDate);
+            const healthMusicElement = document.getElementById('health-music');
+            healthMusicElement.innerHTML = `
+                <h4><i class="fas fa-music"></i> Today's Music Prescription</h4>
+                <p>${musicRecommendation}</p>
+            `;
+            
+            // Update report date
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('report-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            
+            // Show report section
+            document.getElementById('report-section').style.display = 'block';
+            
+            // Scroll to report section
+            setTimeout(() => {
+                document.getElementById('report-section').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date to 25 years ago
+            const defaultDate = new Date();
+            defaultDate.setFullYear(defaultDate.getFullYear() - 25);
+            document.getElementById('user-birthday').valueAsDate = defaultDate;
+            
+            // Bind generate button event
+            document.getElementById('generate-btn').addEventListener('click', generateReport);
+        });
+    </script>
+</body>
+</html>
